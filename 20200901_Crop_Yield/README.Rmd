@@ -30,7 +30,8 @@ key_crop_yields %>%
   summarise(TotalProduction = sum(Amount, na.rm = T)) %>%
   filter(!is.na(TotalProduction) & Crop %in% key_crops) %>%
   ggplot(aes(x = Year, y = TotalProduction, colour = Crop)) +
-  geom_line() +
+  geom_line(size = 1) +
+  scale_color_brewer(type = 'qual', palette = 'Set2') +
   labs(
     x = NULL,
     y = "Production (tonnes per hectare)"
@@ -64,8 +65,10 @@ key_crop_yields %>%
   group_by(Year, Continent, Crop) %>%
   summarise(Total_Production = sum(Amount, na.rm = T)) %>%
   ggplot(aes(x = Year, y = Total_Production, colour = Crop)) +
-  geom_line(size = 1.5) +
+  geom_line(size = 1) +
   facet_wrap(~Continent, scales = "free_y") +
+  scale_color_brewer(type = 'qual', palette = 'Set2') +
+  theme(legend.position = 'bottom') +
   labs(
     x = NULL,
     y = "Total Production (tonnes per hectare)"
@@ -104,15 +107,6 @@ potato_full_data <- potato_data %>%
   mutate(across(where(is.numeric), replace_na, replace=0))
 ```
 
-Let's do a quick correlation plot
-```{r}
-library(corrplot)
-
-potato_full_data %>%
-  select(-Entity, -Continent) %>%
-  cor() %>%
-  corrplot()
-```
 
 Linear regression time
 ```{r}
