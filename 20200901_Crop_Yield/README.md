@@ -190,3 +190,24 @@ potato_fit %>%
 | Population          |    0.527 |     0.094 |     5.611 |       0 |
 | Continent\_Oceania  |    0.357 |     0.095 |     3.758 |       0 |
 | ArableLand          |  \-0.522 |     0.090 |   \-5.812 |       0 |
+
+How are our residuals?
+
+``` r
+actual_fit <- potato_fit %>%
+  pull_workflow_fit()
+
+augment(actual_fit$fit) %>%
+  ggplot(aes(.resid)) +
+  geom_histogram(binwidth=5) +
+  geom_vline(aes(xintercept=0)) +
+  xlim(-40, 40) +
+  labs(
+    x = 'Fitted Residuals',
+    y = NULL, 
+    title = 'Residuals plot',
+    subtitle = 'Reasonably normally distributed'
+  )
+```
+
+![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->

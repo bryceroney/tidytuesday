@@ -139,3 +139,22 @@ potato_fit %>%
   knitr::kable()
 
 ```
+
+How are our residuals?
+```{r}
+actual_fit <- potato_fit %>%
+  pull_workflow_fit()
+
+augment(actual_fit$fit) %>%
+  ggplot(aes(.resid)) +
+  geom_histogram(binwidth=5) +
+  geom_vline(aes(xintercept=0)) +
+  xlim(-40, 40) +
+  labs(
+    x = 'Fitted Residuals',
+    y = NULL, 
+    title = 'Residuals plot',
+    subtitle = 'Reasonably normally distributed'
+  )
+
+```
