@@ -19,9 +19,9 @@ jobs:
         uses: jitterbit/get-changed-files@v1
       - name: Render files
         run: |
-          for changed_file in ${{ steps.files.outputs.all }} do
-            if [ ${file: -4} == ".Rmd" ]
-              Rscript -e 'rmarkdown::render("README.Rmd")'
+          for changed_file in ${{ steps.files.outputs.all }}; do
+            if [ ${changed_file: -4} == ".Rmd" ]
+              Rscript -e 'rmarkdown::render("${changed_file}")'
             fi
           done
       - name: Commit results
