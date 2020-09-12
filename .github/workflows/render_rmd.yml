@@ -1,9 +1,9 @@
 on:
   push:
     paths:
-      - README.Rmd
+      - '**/*.Rmd'
 
-name: Render README
+name: Render RMarkdown
 
 jobs:
   render:
@@ -14,10 +14,17 @@ jobs:
       - uses: r-lib/actions/setup-r@v1
       - uses: r-lib/actions/setup-pandoc@v1
       - name: Install rmarkdown
-        run: Rscript -e 'install.packages("rmarkdown")'
-      - name: Render README
-        run: Rscript -e 'rmarkdown::render("README.Rmd")'
+        run: Rscript -e 'install.packages(c("tidyverse", "tidytuesdayR", "extrafont", "rmarkdown")'
+      - id: files
+        uses: jitterbit/get-changed-files@v1
+      - name: Render files
+        run: |
+          for changed_file in ${{ steps.files.outputs.all }} do
+            if [ ${file: -4} == ".Rmd" ]
+              Rscript -e 'rmarkdown::render("README.Rmd")'
+            fi
+          done
       - name: Commit results
         run: |
-          git commit README.md -m 'Re-build README.Rmd' || echo "No changes to commit"
+          git commit **/*.Rmd -m 'Re-build README.Rmd' || echo "No changes to commit"
           git push origin || echo "No changes to commit"
