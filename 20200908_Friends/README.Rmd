@@ -63,7 +63,7 @@ friends_model <- friends_ratings %>%
   left_join(friends_directors)
 
 
-## This is to trigger GitHub Actions!!!!1!!
+## This is to trigger GitHub Actions!!!!1!!!!!
 ```
 
 ## Step 3: Some EDA
