@@ -20,7 +20,7 @@ jobs:
       - name: Render files
         run: |
           for changed_file in ${{ steps.files.outputs.all }}; do
-            if [ ${changed_file: -4} == ".Rmd" ]; then Rscript -e 'rmarkdown::render("${changed_file}")'; fi;
+            if [ ${changed_file: -4} == ".Rmd" ]; then Rscript -e 'rmarkdown::render("$changed_file")'; fi;
           done
       - name: Commit results
         run: |
